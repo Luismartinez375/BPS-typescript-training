@@ -1,11 +1,22 @@
-let username = 'luis martinez'
-console.log(username)
+//string, number, bool, any
+let myName: string;
+let meaningOfLife: number;
+let isLoading: boolean;
+let album: any
 
+myName = 'Luis'
+meaningOfLife = 42
+isLoading = true
+album = 5150
 
-let a: number = 12
-let b: number = 6
-let c: number = 2
+//function
+const sum = (a:number,b:string) => {
+    return a + b
+}
 
-console.log(a / b)
+//union types
+let postId: string | number
+let isActive: number | boolean | boolean
 
-console.log( c * b)
+//inference example
+let re: RegExp =  /\W+/g
