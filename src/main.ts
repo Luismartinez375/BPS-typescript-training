@@ -423,3 +423,91 @@ logMsg(MyBands.data)
 MyBands.data = [...MyBands.data, 'ZZ top']
 logMsg(MyBands.data)
 /////////////////////////////////////////////////////////////////// 
+//index signatures
+
+interface TransactionObj {
+    readonly [index: string] : number
+    Pizza: number,
+    Books: number,
+    Job: number,
+}
+
+// interface TransactionObj{
+//     readonly [index: string] : number
+// }
+
+const todaysTransaction: TransactionObj = {
+    Pizza: -10,
+    Books: -5,
+    Job: 50,
+    Luis: 22
+}
+logMsg(todaysTransaction.Pizza)
+console.log(todaysTransaction['Pizza'])
+
+let prop: string = 'Pizza'
+// logMsg(todaysTransaction['prop'])
+
+const todaysNet = (transactions: TransactionObj):
+number => {
+    let total = 0
+    for (const transaction in transactions){
+        total += transactions[transaction]
+    }
+    return total
+}
+logMsg(todaysNet(todaysTransaction))
+
+//read only so you cant change it 
+// todaysTransaction.Pizza = 40
+
+// logMsg(todaysTransaction['Dave'])
+
+////////////////////////////////////////////////
+interface Student{
+    // [key: string]: string | number | number[] | undefined
+    name: string,
+    GPA: number,
+    classes?: number[]
+}
+
+const stu: Student = {
+    name: 'Luis',
+    GPA: 3.1,
+    classes: [1001,2200,3300]
+}
+
+// logMsg(stu.test)
+
+for(const key in stu){
+    logMsg(`${key} ${stu[key as keyof Student]}`)
+}
+
+Object.keys(stu).map(key => {
+    logMsg(stu[key as keyof typeof stu])
+})
+
+const logStudentkey = (student: Student, key:keyof Student): void =>{
+    logMsg(`Student ${key}: ${student[key]}`)
+}
+
+logStudentkey(stu, 'GPA')
+////////////////////////////////////////////////////
+// interface Incomes {
+    // [key:string]:number
+// 
+// }
+
+type Streams = 'salary' | 'bonus' | 'sidehustle'
+
+type Incomes = Record<Streams, number>
+
+const monthlyIncomes: Incomes = {
+    salary: 500,
+    bonus: 100,
+    sidehustle:250
+}
+
+for (const revenue in monthlyIncomes){
+    console.log(monthlyIncomes[revenue as keyof Incomes])
+}
