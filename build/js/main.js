@@ -195,10 +195,110 @@ let nextVal = addOrConcat(2, 2, 'concat');
 //force casting or double casting 
 10;
 // the DOM (when working with webpages)
-const img = document.querySelector('img');
+// const img = document.querySelector('img') as HTMLImageElement
 //this also works
 // const img = document.querySelector('img')!
-const myImg = document.getElementById('#img');
-const nextImg = document.getElementById('#img');
-img.src;
-myImg.src;
+// const myImg = document.getElementById('#img')! as HTMLImageElement
+// const nextImg = <HTMLElement>document.getElementById('#img')
+// img.src
+// myImg.src
+//lesson 06 classes
+class Coder {
+    constructor(data, 
+    //if you specify you dont have to declare it outside of the constructor
+    name, music, 
+    //since age is private it can only be accessed in the class
+    age, 
+    //setting the property here causes it to be optional when creating an instance of the class
+    lang = 'typescript') {
+        this.name = name;
+        this.music = music;
+        this.age = age;
+        this.lang = lang;
+        //data is an example of how to do it normally without specifying if its public or something else
+        this.data = data;
+        this.name = name;
+        this.music = music;
+        this.age = age;
+        this.lang = lang;
+    }
+    //a way to access the age since it is a private property 
+    getAge() {
+        return `hello, I'm ${this.age}`;
+    }
+}
+const Luis = new Coder('hello', 'Luis', 'rap', 22, 'typescript');
+//this works because we are not directly accessing age
+logMsg(Luis.getAge());
+//this does not work because age is private 
+// logMsg(Luis.age)
+//also doesnt work because lang is protected
+// logMsg(Luis.lang)
+//extending the coder class (basically inheratence, making a subclass) 
+class WebDev extends Coder {
+    constructor(computer, data, name, music, age) {
+        super(data, name, music, age);
+        this.computer = computer;
+        this.computer = computer;
+    }
+    getLang() {
+        return `I write ${this.lang}`;
+    }
+}
+const Beli = new WebDev('Windows', 'Hello!', 'Belinda', 'Lofi', 20);
+logMsg(Beli.getLang());
+////////////////////////////////////////////////////////////////////
+class Guitarista {
+    constructor(name, instrument) {
+        this.name = name;
+        this.instrument = instrument;
+    }
+    play(action) {
+        return `${this.name} ${action} the ${this.instrument}`;
+    }
+}
+const Page = new Guitarista('Jimmy', 'guitar');
+console.log(Page.play('strums'));
+///////////////////////////////////////////////////////////////////
+class Peeps {
+    static getCount() {
+        return Peeps.count;
+    }
+    constructor(name) {
+        this.name = name;
+        this.name = name;
+        //the  ++ is on the left so it can start at 1 rather than at 0
+        this.id = ++Peeps.count;
+    }
+}
+Peeps.count = 0;
+const John = new Peeps('John');
+const Kate = new Peeps('Kate');
+const Dan = new Peeps('Dan');
+logMsg(Peeps.count);
+logMsg(John.id);
+logMsg(Kate.id);
+logMsg(Dan.id);
+//////////////////////////////////////////////////////////////////
+class Bands {
+    constructor() {
+        this.dataState = [];
+    }
+    get data() {
+        return this.dataState;
+    }
+    set data(value) {
+        if (Array.isArray(value) && value.every(el => typeof el === 'string')) {
+            this.dataState = value;
+            return;
+        }
+        else
+            throw new Error('Param is not an array of strings');
+    }
+}
+const MyBands = new Bands();
+MyBands.data = ['Neil Young', 'Led Zep'];
+logMsg(MyBands.data);
+MyBands.data = [...MyBands.data, 'ZZ top'];
+logMsg(MyBands.data);
+/////////////////////////////////////////////////////////////////// 

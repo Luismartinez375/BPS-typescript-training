@@ -277,11 +277,149 @@ let nextVal:number = addOrConcat(2,2,'concat') as number
 (10 as unknown) as string
 
 // the DOM (when working with webpages)
-const img = document.querySelector('img') as HTMLImageElement
+// const img = document.querySelector('img') as HTMLImageElement
 //this also works
 // const img = document.querySelector('img')!
-const myImg = document.getElementById('#img')! as HTMLImageElement
-const nextImg = <HTMLElement>document.getElementById('#img')
+// const myImg = document.getElementById('#img')! as HTMLImageElement
+// const nextImg = <HTMLElement>document.getElementById('#img')
 
-img.src
-myImg.src
+// img.src
+// myImg.src
+
+//lesson 06 classes
+
+class Coder {
+    // since data is not speified it need to be declared here
+        data: string
+        //making an assertion (only for pros)
+        seconLang!:string
+    
+
+    constructor(
+         data: string,
+         //if you specify you dont have to declare it outside of the constructor
+         public readonly name: string,
+         public music: string,
+         //since age is private it can only be accessed in the class
+         private age: number, 
+         //setting the property here causes it to be optional when creating an instance of the class
+         protected lang:string = 'typescript',
+          ){
+        //data is an example of how to do it normally without specifying if its public or something else
+        this.data = data
+        this.name = name
+        this.music = music
+        this.age = age
+        this.lang = lang
+    }
+    //a way to access the age since it is a private property 
+    public getAge(){
+        return `hello, I'm ${this.age}`
+    }
+}
+const Luis = new Coder('hello','Luis','rap',22,'typescript')
+//this works because we are not directly accessing age
+logMsg(Luis.getAge())
+//this does not work because age is private 
+// logMsg(Luis.age)
+//also doesnt work because lang is protected
+// logMsg(Luis.lang)
+
+//extending the coder class (basically inheratence, making a subclass) 
+class WebDev extends Coder{
+    constructor(
+        public computer: string,
+        data:string,
+        name: string,
+        music: string,
+        age: number
+    ){
+        super(data,name,music,age)
+        this.computer = computer
+    }
+    public getLang(){
+        return `I write ${this.lang}`
+    }
+}
+const Beli = new WebDev('Windows','Hello!','Belinda','Lofi',20)
+logMsg(Beli.getLang())
+//same thing here as before it doesnt work because age is still private in parent class
+// logMsg(Beli.age)
+//same thing here lang is protected so we cant access it directly 
+// logMsg(Beli.lang)
+
+
+interface Musician {
+    name:string
+    instrument: string
+    play(action: string):string
+
+}
+////////////////////////////////////////////////////////////////////
+class Guitarista implements Musician{
+    name: string
+    instrument: string
+
+    constructor(name:string,instrument:string){
+        this.name = name
+        this.instrument = instrument
+
+    }
+
+    play(action:string){
+        return `${this.name} ${action} the ${this.instrument}`
+    }
+}
+
+const Page = new Guitarista('Jimmy','guitar')
+
+console.log(Page.play('strums'))
+///////////////////////////////////////////////////////////////////
+class Peeps{
+    static count: number = 0
+    static getCount(): number {
+        return Peeps.count
+    }
+    public id: number
+    constructor(public name: string){
+        this.name = name
+        //the  ++ is on the left so it can start at 1 rather than at 0
+        this.id = ++Peeps.count
+    }  
+}
+
+const John =  new Peeps('John')
+const Kate =  new Peeps('Kate')
+const Dan =  new Peeps('Dan')
+
+logMsg(Peeps.count)
+logMsg(John.id)
+logMsg(Kate.id)
+logMsg(Dan.id)
+//////////////////////////////////////////////////////////////////
+
+class Bands{
+    private dataState: string[]
+
+    constructor(){
+        this.dataState = []
+    }
+
+    public get data(): string[]{
+        return this.dataState
+    }
+    public set data(value:string[]){
+        if(Array.isArray(value) && value.every(el => typeof el === 'string')){
+            this.dataState = value
+            return 
+    } else throw new Error('Param is not an array of strings')
+}}
+
+const MyBands = new Bands()
+
+MyBands.data = ['Neil Young', 'Led Zep']
+logMsg(MyBands.data)
+
+MyBands.data = [...MyBands.data, 'ZZ top']
+logMsg(MyBands.data)
+/////////////////////////////////////////////////////////////////// 
