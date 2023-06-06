@@ -244,3 +244,44 @@ const numberOrString = ( value: number | string):string => {
     if (typeof value == 'number' ) return 'number'
     return createError('this shouldnt happen')
 }
+
+// typescripting casting || type assertions
+//type assertion is basically telling typescript that  you know more about the types you may be working with 
+
+type one = string 
+type two = string | number
+type three = 'hello'
+
+//convert to more or less specific 
+let a: one = 'hello'
+let b = a as two //less specific
+let c =  a  as three //more specific 
+
+let d =  <one>'world'
+let e = <string | number>'world'
+
+
+const addOrConcat = (a:number,b:number,c:'add' | 'concat'): number | string =>{
+    if (c === 'add') return a + b
+    return '' + a + b
+}
+
+
+let myVal:string = addOrConcat(2,2,'concat') as string
+
+//Be careful! typescript sees no problem but string is returned 
+let nextVal:number = addOrConcat(2,2,'concat') as number
+
+
+//force casting or double casting 
+(10 as unknown) as string
+
+// the DOM (when working with webpages)
+const img = document.querySelector('img') as HTMLImageElement
+//this also works
+// const img = document.querySelector('img')!
+const myImg = document.getElementById('#img')! as HTMLImageElement
+const nextImg = <HTMLElement>document.getElementById('#img')
+
+img.src
+myImg.src
