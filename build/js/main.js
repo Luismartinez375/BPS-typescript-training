@@ -301,4 +301,48 @@ MyBands.data = ['Neil Young', 'Led Zep'];
 logMsg(MyBands.data);
 MyBands.data = [...MyBands.data, 'ZZ top'];
 logMsg(MyBands.data);
-/////////////////////////////////////////////////////////////////// 
+// interface TransactionObj{
+//     readonly [index: string] : number
+// }
+const todaysTransaction = {
+    Pizza: -10,
+    Books: -5,
+    Job: 50,
+    Luis: 22
+};
+logMsg(todaysTransaction.Pizza);
+console.log(todaysTransaction['Pizza']);
+let prop = 'Pizza';
+// logMsg(todaysTransaction['prop'])
+const todaysNet = (transactions) => {
+    let total = 0;
+    for (const transaction in transactions) {
+        total += transactions[transaction];
+    }
+    return total;
+};
+logMsg(todaysNet(todaysTransaction));
+const stu = {
+    name: 'Luis',
+    GPA: 3.1,
+    classes: [1001, 2200, 3300]
+};
+// logMsg(stu.test)
+for (const key in stu) {
+    logMsg(`${key} ${stu[key]}`);
+}
+Object.keys(stu).map(key => {
+    logMsg(stu[key]);
+});
+const logStudentkey = (student, key) => {
+    logMsg(`Student ${key}: ${student[key]}`);
+};
+logStudentkey(stu, 'GPA');
+const monthlyIncomes = {
+    salary: 500,
+    bonus: 100,
+    sidehustle: 250
+};
+for (const revenue in monthlyIncomes) {
+    console.log(monthlyIncomes[revenue]);
+}
